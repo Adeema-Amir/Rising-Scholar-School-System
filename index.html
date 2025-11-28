@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rising Scholars School System</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="shortcut icon" href="./1.png" type="image/x-icon">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+    /* upcoming events */
+    #newEvent {
+      width: 200px;
+      height: 35px;
+      border-radius: 5px;
+      border: #97c0f5;
+      border-style: double;
+      font-style: italic;
+      font-weight: 700;
+      color: #6a9de9;
+    }
+
+    .box {
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .event-item {
+      background: linear-gradient(90deg, hwb(211 51% 5%) 0%, #97c0f5 100%);
+      font-size: 25px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-style: italic;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      display: flex;
+      width: 846px;
+      justify-content: space-between;
+    }
+
+    #adminPanel {
+      display: none;
+    }
+
+    #loginBox {
+      max-width: 400px;
+      margin: auto;
+    }
+
+    /*  winners slider    */
+
+
+
+    .card1 {
+      position: relative;
+      left: 140px;
+      height: 350px;
+      width: 100%;
+      max-width: 850px;
+      padding: 14px;
+      background-color: #ffffff;
+      border-radius: 25px;
+      box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .card1 .inner_part {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0 0 30px;
+      height: 350px;
+      position: absolute;
+    }
+
+    #slideImg:checked~.inner_part {
+      padding: 0;
+      transition: .1s ease-in;
+    }
+
+    .inner_part .img {
+      height: 260px;
+      width: 260px;
+      overflow: hidden;
+      flex-shrink: 0;
+      border-radius: 20px;
+    }
+
+    #slideImg:checked~.inner_part .img {
+      height: 350px;
+      width: 850px;
+      z-index: 99;
+      transition: .3s .2s ease-in;
+    }
+
+    .img img {
+      height: 100%;
+      width: 100%;
+      cursor: pointer;
+      opacity: 0;
+      transition: .6s;
+    }
+
+    #slide_1:checked~.inner_part .img_1,
+    #slide_2:checked~.inner_part .img_2,
+    #slide_3:checked~.inner_part .img_3 {
+      opacity: 1;
+      transition-delay: .2s;
+    }
+
+    .content {
+      padding: 0 20px 0 35px;
+      width: 530px;
+      margin-left: 50px;
+      opacity: 0;
+      transition: .6s;
+    }
+
+    #slideImg:checked~.inner_part .content {
+      display: none;
+    }
+
+    #slide_1:checked~.inner_part .content_1,
+    #slide_2:checked~.inner_part .content_2,
+    #slide_3:checked~.inner_part .content_3 {
+      opacity: 1;
+      margin-left: 0;
+      z-index: 100;
+      transition-delay: .3s;
+    }
+
+    .content .title {
+      font-size: 30px;
+      font-weight: 700;
+      color: #0d0925;
+      margin: 0 0 20px 0;
+    }
+
+    .content .text {
+      font-size: 19px;
+      color: #4e4a67;
+      margin: 0 auto 30px auto;
+      line-height: 1.5em;
+      text-align: justify;
+    }
+
+    .content button {
+      padding: 15px 20px;
+      border: none;
+      font-size: 16px;
+      color: #fff0e6;
+      font-weight: 600;
+      letter-spacing: 1px;
+      border-radius: 50px;
+      cursor: pointer;
+      outline: none;
+      background: #000000;
+      float: right;
+    }
+
+    .content button:hover {
+      background: #cecece;
+      color: #000000;
+    }
+
+    .sliders {
+      position: absolute;
+      bottom: 25px;
+      left: 55%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    #slideImg:checked~.sliders {
+      display: none;
+    }
+
+    .sliders .slides {
+      position: relative;
+      height: 10px;
+      width: 50px;
+      background: #d9d9d9;
+      border-radius: 5px;
+      display: inline-flex;
+      margin: 0 3px;
+      cursor: pointer;
+    }
+
+
+    .sliders .slides:before {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: -100%;
+      background: #000000;
+      ;
+      border-radius: 10px;
+      transform: scaleX(0);
+      transition: transform .6s;
+      transform-origin: left;
+    }
+
+    #slide_1:checked~.sliders .slide_1:before,
+    #slide_2:checked~.sliders .slide_2:before,
+    #slide_3:checked~.sliders .slide_3:before {
+      transform: scaleX(1);
+      width: 100%;
+    }
+
+    .inputs {
+      display: none;
+    }
+
+
+    /* ---------- RESET & BASE ---------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      font-family: Inter, Roboto, Arial, sans-serif;
+      color: #222;
+      background: #fff
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 90;
+      background: #fff;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06)
+    }
+
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 2px
+    }
+
+    .brand img {
+      height: 90px;
+      width: 130px;
+    }
+
+    /* logo space */
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center
+    }
+
+    .nav-links a {
+      font-weight: 500;
+      color: #333;
+      padding: 6px 2px
+    }
+
+    .nav-links a.active {
+      color: #1976d2
+    }
+
+    .right-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center
+    }
+
+    .btn-login {
+      background: transparent;
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      min-height: 420px;
+      background: linear-gradient(90deg, #2b8bf0 0%, #66a8ff 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      padding: 80px 20px 60px
+    }
+
+    /* extra top for fixed navbar */
+    .hero .wrap {
+      max-width: 1000px
+    }
+
+    .hero h1 {
+      font-size: 54px;
+      line-height: 1.02;
+      margin-bottom: 14px;
+      font-weight: 800
+    }
+
+    .hero p.lead {
+      font-size: 18px;
+      opacity: 0.95;
+      margin-bottom: 18px
+    }
+
+    .hero .supervisor {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-top: 20px
+    }
+
+    .hero .cta {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 10px
+    }
+
+    .cta .primary {
+      background: #ffc107;
+      border: 0;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 800;
+      cursor: pointer
+    }
+
+    .cta .outline {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      padding: 10px 18px;
+      font-weight: 800;
+      border-radius: 9px;
+      color: white
+    }
+
+    /* ---------- CONTAINER & SECTIONS ---------- */
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 48px 20px
+    }
+
+    h2.section-title {
+      font-size: 34px;
+      font-weight: 800;
+      color: #1976d2;
+      text-align: center;
+      margin-bottom: 8px
+    }
+
+    p.section-sub {
+      color: #6b7280;
+      text-align: center;
+      margin-bottom: 28px
+    }
+
+    /* ---------- ACTIVITIES CARDS ---------- */
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 28px
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(16, 24, 40, 0.06)
+    }
+
+    .card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      display: block
+    }
+
+    .card-body {
+      padding: 18px
+    }
+
+    .card-body h3 {
+      color: #1976d2;
+      font-size: 20px;
+      margin-bottom: 8px
+    }
+
+    .card-body p {
+      color: #6b7280;
+      font-size: 15px
+    }
+
+    /* ---------- EVENTS CALENDAR ---------- */
+    .events {
+      background: linear-gradient(90deg, #f0f7ff, #fff7fb);
+      padding: 22px;
+      border-radius: 12px;
+      margin-top: 30px
+    }
+
+    .calendar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 12px
+    }
+
+    .day {
+      background: #fff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(16, 24, 40, 0.04);
+      font-weight: 700
+    }
+
+    .day.special {
+      background: linear-gradient(90deg, #fff6e6, #fff1f1);
+      color: #b30000
+    }
+
+
+    /* ---------- TEACHERS ---------- */
+    .teacher-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+
+    .teacher {
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: .4s;
+    }
+
+    #t1 {
+      height: 300px;
+    }
+
+    .teacher:hover {
+      transform: scale(1.05);
+    }
+
+    .teacher img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    /* ---------- TOP PERFORMERS ---------- */
+    .performer-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(16, 24, 40, 0.05);
+      margin: 20px 0
+    }
+
+    .perf-photo {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      overflow: hidden
+    }
+
+    .perf-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .perf-body h4 {
+      color: #1976d2;
+      font-size: 22px
+    }
+
+    .perf-body p {
+      color: #6b7280
+    }
+
+    /* ---------- CONTACT CARDS ---------- */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 18px
+    }
+
+    .contact-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(16, 24, 40, 0.05);
+      text-align: center
+    }
+
+    .contact-card h4 {
+      color: #1976d2;
+      margin-bottom: 6px
+    }
+
+    .contact-card p {
+      color: #6b7280
+    }
+
+    /* ---------- TIMELINE ---------- */
+    .timeline {
+      position: relative;
+      padding-left: 80px
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 40px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #e6f0ff;
+      border-radius: 2px
+    }
+
+    .timeline-item {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 30px rgba(16, 24, 40, 0.04);
+      position: relative
+    }
+
+    .timeline-item .year {
+      position: absolute;
+      left: -12px;
+      top: 18px;
+      background: #1976d2;
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 18px;
+      font-weight: 700
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: linear-gradient(90deg, #2b8bf0 0%, #66a8ff 100%);
+      color: #fff;
+      padding: 40px 20px;
+      margin-top: 40px
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px
+    }
+
+    .footer-inner p {
+      opacity: 0.9
+    }
+
+    /* ---------- CHAT ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", Arial;
+    }
+
+    body {
+      background: #eef3f8;
+      min-height: 100vh;
+    }
+
+    /* TOGGLE BUTTON */
+    .toggle-btn {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      background: #1d4e89;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      z-index: 300;
+      transition: 0.3s ease;
+    }
+
+    .toggle-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* CHATBOX */
+    .chatbox {
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      width: 320px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: .3s ease;
+    }
+
+    /* SHOW */
+    .chatbox.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* HEADER */
+    .chat-header {
+      background: #1d4e89;
+      padding: 15px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* CHAT AREA */
+    .chat-area {
+      height: 280px;
+      overflow-y: auto;
+      padding: 12px;
+      background: #f7f9fc;
+    }
+
+    /* MESSAGES */
+    .msg {
+      max-width: 85%;
+      margin: 8px 0;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .user-msg {
+      background: #d5e6ff;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .bot-msg {
+      background: #fff;
+      border-left: 4px solid #1d4e89;
+    }
+
+    /* INPUT AREA */
+    .input-area {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
+    .input-area input {
+      padding: 12px;
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 14px;
+    }
+
+    .input-area button {
+      background: #1d4e89;
+      color: white;
+      padding: 0 18px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* TYPING ANIMATION */
+    .typing {
+      width: 30px;
+      height: 10px;
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      margin-left: 5px;
+    }
+
+    .typing span {
+      width: 7px;
+      height: 7px;
+      background: #1d4e89;
+      border-radius: 50%;
+      animation: blink 1.4s infinite alternate;
+    }
+
+    .typing span:nth-child(2) {
+      animation-delay: .2s;
+    }
+
+    .typing span:nth-child(3) {
+      animation-delay: .4s;
+    }
+
+    @keyframes blink {
+      from {
+        opacity: .2;
+        transform: translateY(0);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(-3px);
+      }
+    }
+
+    /* admin button */
+
+
+    /* POPUP BACKGROUND */
+    .popup-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* LOGIN BOX */
+    .login-box {
+      background: white;
+      width: 300px;
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #bbb;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 10px;
+      background: #1d4e89;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="brand"><img src="./1.png" alt="Logo"></div>
+      <nav class="nav-links"> <a href="#home" class="active">Home</a> <a href="#activities">Activities</a> <a
+          href="#winners">Winners</a> <a href="#teachers">Teachers</a> <a href="#education">Education</a> <a
+          href="#toppers">Toppers</a> <a href="#contact">Contact</a>
+        <div class="right-actions">
+          <div id="loginBox" class="box"><button id="loginBtn" class="btn-login">Admin Login</button>
+          </div>
+        </div>
+        <div class="popup-bg" id="popup">
+          <div class="login-box">
+            <h2>Admin Login</h2>
+
+            <input type="text" id="email" placeholder="Enter Email">
+
+            <input type="password" id="password" placeholder="Enter Password">
+
+            <button onclick="login()">Login</button>
+
+            <div class="error" id="errorMsg"></div>
+          </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="wrap"> <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <h1>Rising Scholars Secondary School</h1><br />
+      <p class="lead">“Empowering students, inspiring minds, nurturing talent, <br /> and shaping bright futures
+        where potential meets opportunity.”</p><br /></br>
+      <div class="cta"> <button class="primary">Explore Programs</button> <button class="outline"><a
+            href="#contact">Contact</a>
+          Us</button> </div> <br /><br />
+      <div class="supervisor">Supervised by: Mam Komal Naqvi</div>
+    </div>
+  </section>
+
+
+  <br /><br /><br /><br /><br /><br /> <!-- ACTIVITIES -->
+  <main class="container">
+    <section id="activities">
+      <h2 class="section-title">Our Activities</h2> <br />
+      <p class="section-sub">Innovative programs designed to inspire growth, <br /> creativity, and lifelong
+        learning.</p> </br>
+      <div class="activities-grid">
+        <div class="card"><img src="2.1.jpg" alt="Sports">
+          <div class="card-body">
+            <h3>Sports & Athletics</h3></br>
+            <p>Building strength, teamwork, and discipline through various sports programs</p>
+          </div>
+        </div>
+        <div class="card"><img src="2.2.jpg" alt="Science">
+          <div class="card-body">
+            <h3>Science & Innovation</h3></br>
+            <p>Encouraging curiosity and critical thinking through hands-on experiments</p>
+          </div>
+        </div>
+        <div class="card"><img src="2.3.jpg" alt="Cultural">
+          <div class="card-body">
+            <h3>Cultural Programs</h3></br>
+            <p>Celebrating diversity and creativity through arts and cultural events</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- up coming events -->
+
+      <br><br><br><br><br><br><br><br><br><br><br>
+      <div id="adminPanel" class="box">
+        <h2 class="section-title">Admin Event Control</h2>
+
+        <input type="text" id="newEvent" placeholder="Enter New Event…">
+        <button class="btn-login" style="background:rgb(119, 160, 247); margin-left: 15px; margin-top:20px;"
+          onclick="addEvent()">Add Event</button>
+        <br><br><br>
+        <div id="adminEventList"></div>
+
+        <button style="background:red; margin-top:20px;" class="btn-login" onclick="logout()">Sign Out</button>
+      </div>
+
+
+      <div id="userEvents" class="box">
+        <h2 class="section-title">Upcoming Events</h3>
+          <p class="section-sub">We have exciting events planned to enrich learning and celebrate talents.</p>
+
+          <br /><br><br>
+          <center>
+            <div id="eventList"></div>
+          </center>
+      </div>
+    </section> </br></br></br></br></br></br></br></br></br>
+
+    <!-- WINNERS -->
+
+    <h2 class="section-title">Our Winners</h2></br>
+    <p class="section-sub">We celebrate the achievements of our students in academics, sports, and competitions.</p>
+    </br></br><br><br>
+    <div id="winners" class="card1">
+      <input class="inputs" type="radio" name="select" id="slide_1" checked>
+      <input class="inputs" type="radio" name="select" id="slide_2">
+      <input class="inputs" type="radio" name="select" id="slide_3">
+      <input class="inputs" type="checkbox" id="slideImg">
+
+      <div class="sliders">
+        <label for="slide_1" class="slides slide_1"></label>
+        <label for="slide_2" class="slides slide_2"></label>
+        <label for="slide_3" class="slides slide_3"></label>
+      </div>
+      <div class="inner_part">
+        <label for="slideImg" class="img">
+          <img class="img_1" src="2.1.png">
+        </label>
+        <div class="content content_1">
+          <div class="title">Sabeen</div>
+          <div class="text">Always focused on her studies, manages her time well, <br> and sets a great example for
+            others.
+          </div>
+        </div>
+      </div>
+      <div class="inner_part">
+        <label for="slideImg" class="img">
+          <img class="img_2" src="2.2.png"> </label>
+        <div class="content content_2">
+          <div class="title">Areesha</div>
+          <div class="text">Loves to participate in every event, shows enthusiasm, <br> and motivates his classmates to
+            join.
+          </div>
+        </div>
+      </div>
+      <div class="inner_part">
+        <label for="slideImg" class="img">
+          <img class="img_3" src="2.3.png"> </label>
+        <div class="content content_3">
+          <div class="title">Rabia</div>
+          <div class="text">Always gives his best in competitions, works hard, <br> and never gives up even on
+            challenges </div>
+        </div>
+      </div>
+    </div>
+
+    </br></br></br></br></br></br></br></br> </br></br></br></br></br></br></br></br>
+    </br></br></br></br></br></br></br></br> </br></br></br></br></br></br></br></br>
+
+    <!-- TEACHERS -->
+
+    <section id="teachers">
+      <h2 class="section-title">Our Teachers</h2><br>
+      <p class="section-sub">Our teachers are dedicated and passionate about educating the next generation.</p></br>
+      <br><br><br><br><br>
+      <div class="teacher-grid">
+        <div class="teacher"><img id="t1"
+            src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1"><br><br><br>
+          <h3>Miss Ayesha</h3><br><br>
+          <p>A good teacher</p>
+        </div>
+        <div class="teacher"><img id="t1"
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde"><br><br><br>
+          <h3>Miss Nergos</h3><br><br>
+          <p>A good teacher</p>
+        </div>
+        <div class="teacher">
+          <img id="t1" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c"><br><br><br>
+          <h3>Miss Komal</h3><br><br>
+          <p>A good teacher</p>
+        </div>
+      </div>
+    </section>
+
+    </br></br></br></br></br></br></br></br></br></br></br> <!-- EDUCATION TIMELINE -->
+    <section id="education">
+      <h2 class="section-title">Our Educational Journey</h2></br>
+      <p class="section-sub">A timeline of growth and achievement</p></br></br></br>
+      <div class="timeline">
+        <div class="timeline-item"><span class="year">2010</span></br></br></br>
+          <h3>Foundation</h3></br>
+          <p>Established with a vision to provide quality education</p>
+        </div> </br>
+        <div class="timeline-item"><span class="year">2015</span></br></br></br>
+          <h3>Expansion</h3></br>
+          <p>Added new facilities and programs</p>
+        </div> </br>
+        <div class="timeline-item"><span class="year">2020</span></br></br></br>
+          <h3>Digital Integration</h3></br>
+          <p>Embraced technology in education</p>
+        </div> </br>
+        <div class="timeline-item"><span class="year">2025</span></br></br></br>
+          <h3>Excellence Recognition</h3></br>
+          <p>Awarded for outstanding educational standards</p>
+        </div>
+      </div>
+    </section>
+
+    </br></br></br></br></br></br></br></br></br> <!-- TOP PERFORMERS -->
+    <section id="toppers">
+      <h2 class="section-title">Top Performers</h2></br>
+      <p class="section-sub">Outstanding academic achievements</p></br></br></br>
+      <div class="performer-card">
+        <div class="perf-photo"><img src="/mnt/data/2.jpg" alt="perf"></div>
+        <div class="perf-body">
+          <h4>Emma Williams</h4></br>
+          <p style="color:#f0a500;font-weight:700">Class of 2024 - 98.5%</p></br>
+          <p>Exceptional performance across all subjects with special recognition in STEM fields</p></br>
+        </div>
+      </div>
+    </section>
+
+    </br></br></br></br></br></br></br></br></br></br></br></br> <!-- CONTACT -->
+    <section id="contact">
+      <h2 class="section-title">Contact Us</h2></br>
+      <p class="section-sub">Get in touch with us</p></br>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h4>Phone</h4></br>
+          <p>+92 0345-9876895<br></br>Mon-Sat: 8AM-6PM</p></br></br>
+        </div>
+        <div class="contact-card">
+          <h4>Email</h4></br>
+          <p></br>rsss.taxila@gmail.com'</p></br></br>
+        </div>
+        <div class="contact-card">
+          <h4>Address</h4></br>
+          <p>123 Education Street<br></br>Near Flour Mill,Taxila,Pakistan</p></br></br>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  </br></br></br></br></br></br>
+  <!-- FOOTER -->
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h3 style="color:#fff;margin-bottom:8px">Rising Scholars School</h3>
+        <p style="color:rgba(255,255,255,0.85)">Empowering students — Building futures</p>
+      </div>
+      <div style="color:rgba(255,255,255,0.9)">
+        <p>Phone 📞: +92 0345-9876895</p> </br>
+        <p>Email 📧: rsss.taxila@gmail.com'</p> </br>
+        <p>Address 🏡: Near Flour Mill,Taxila,Pakistan</p> </br>
+      </div>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,0.8);margin-top:18px">© 2025 Rising Scholars — All Rights
+      Reserved</p>
+  </footer>
+
+
+  <!-- CHAT -->
+  <div class="toggle-btn" id="toggleBtn">💬</div>
+
+  <div class="chatbox" id="chatbox">
+    <div class="chat-header">School Admission Bot</div>
+
+    <div class="chat-area" id="chatArea"></div>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type here...">
+      <button onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+
+
+  <script>
+
+    // admin button
+    let loginBtn = document.getElementById("loginBtn");
+    let popup = document.getElementById("popup");
+    let errorMsg = document.getElementById("errorMsg");
+
+    // YOUR ADMIN LOGIN DETAILS
+    const ADMIN_EMAIL = "rsss.taxila@gmail.com";
+    const ADMIN_PASSWORD = "Rsss123";
+
+    loginBtn.onclick = () => {
+      if (loginBtn.innerText === "Logout") {
+        loginBtn.innerText = "Login";
+        alert("You are logged out successfully!");
+      } else {
+        popup.style.display = "flex";
+      }
+    };
+
+    function checkLogin() {
+      let email = document.getElementById("email").value.trim();
+      let password = document.getElementById("password").value.trim();
+
+      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+
+        popup.style.display = "none";
+        loginBtn.innerText = "Logout";
+        errorMsg.innerText = "";
+
+        alert("Login successful! Welcome Admin.");
+
+      } else {
+        errorMsg.innerText = "You are not admin!";
+      }
+    }
+
+    // Close popup by clicking outside
+    popup.onclick = (e) => {
+      if (e.target === popup) popup.style.display = "none";
+    };
+
+    // chaat
+    const toggleBtn = document.getElementById("toggleBtn");
+    const chatbox = document.getElementById("chatbox");
+    const chatArea = document.getElementById("chatArea");
+    const userInput = document.getElementById("userInput");
+
+    toggleBtn.onclick = () => {
+      chatbox.classList.toggle("show");
+      toggleBtn.innerHTML = chatbox.classList.contains("show") ? "✖" : "💬";
+    };
+
+    function sendMsg() {
+      let text = userInput.value.trim();
+      if (!text) return;
+
+      // USER MESSAGE
+      addMsg(text, "user");
+
+      userInput.value = "";
+
+      // BOT TYPING ANIMATION
+      let typing = document.createElement("div");
+      typing.className = "typing bot-msg";
+      typing.innerHTML = `<span></span><span></span><span></span>`;
+      chatArea.appendChild(typing);
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      setTimeout(() => {
+        typing.remove();
+        botReply(text);
+      }, 1200);
+    }
+
+    function addMsg(text, type) {
+      let div = document.createElement("div");
+      div.className = "msg " + (type === "user" ? "user-msg" : "bot-msg");
+      div.innerText = text;
+      chatArea.appendChild(div);
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function botReply(input) {
+      input = input.toLowerCase();
+
+      let reply = "";
+
+      if (input.includes("fee")) reply = "So our Admission fee is Rs. 3000 only.";
+      else if (input.includes("location")) reply = "We are located at Timber Market Road, Taxila.";
+      else if (input.includes("supervisor")) reply = "Supervisor: Sir Safdar Hussain Anjum.";
+      else if (input.includes("admission")) reply = "Admissions are open now!";
+      else if (input.includes("school")) reply = "Our  school is very good in education and in everything!";
+      else if (input.includes("hi")) reply = "Hello! Tell me how can i help you";
+      else if (input.includes("bye")) reply = "Thank you for contacting us! If you need any information we are always avalabile for you";
+      else reply = "Thank you! Our team will contact you soon.";
+
+      addMsg(reply, "bot");
+    }
+    //  anonymus
+
+    const links = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('main section, .hero');
+
+    //  code of upcoming events
+
+
+
+    // ------------------ LOCAL STORAGE SYSTEM ------------------
+    let events = JSON.parse(localStorage.getItem("events")) || [];
+
+    // ------------------ DISPLAY EVENTS ------------------
+    function showEvents() {
+      let userList = document.getElementById("eventList");
+      let adminList = document.getElementById("adminEventList");
+
+      userList.innerHTML = "";
+      adminList.innerHTML = "";
+
+      events.forEach((ev, i) => {
+        // USER DISPLAY
+        userList.innerHTML += `<div class='event-item'>${ev}</div>`;
+
+        // ADMIN DISPLAY
+        adminList.innerHTML += `
+            <div class='event-item'>
+                ${ev}
+                <button style="background:red; width:auto;" class="btn-login" onclick="delEvent(${i})">Delete</button>
+            </div>
+        `;
+      });
+    }
+    showEvents();
+
+    // ------------------ ADD EVENT ------------------
+    function addEvent() {
+      let val = document.getElementById("newEvent").value;
+      if (val.trim() === "") return alert("Write an event first!");
+
+      events.push(val);
+      localStorage.setItem("events", JSON.stringify(events));
+      document.getElementById("newEvent").value = "";
+      showEvents();
+    }
+
+    // ------------------ DELETE EVENT ------------------
+    function delEvent(index) {
+      events.splice(index, 1);
+      localStorage.setItem("events", JSON.stringify(events));
+      showEvents();
+    }
+
+    // ------------------ LOGIN SYSTEM ------------------
+    function login() {
+      let email = document.getElementById("email").value;
+      let pass = document.getElementById("password").value;
+
+      if (email === "rsss.taxila@gmail.com" && pass === "Rsss123") {
+        localStorage.setItem("admin", "true");
+        document.getElementById("popup").style.display = "none"; // hide popup
+        showAdminPanel();
+      } else {
+        document.getElementById("errorMsg").innerText = "❌ You are not admin!";
+      }
+    }
+
+    // ------------------ LOGOUT ------------------
+    function logout() {
+      localStorage.removeItem("admin");
+      location.reload();
+    }
+    // ------------------ SHOW PANEL ------------------
+    function showAdminPanel() {
+      let isAdmin = localStorage.getItem("admin");
+
+      if (isAdmin) {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+      }
+    }
+    showAdminPanel();
+    // ------------------ SHOW LOGIN POPUP ------------------
+    document.getElementById("loginBtn").addEventListener("click", function () {
+      document.getElementById("popup").style.display = "flex";
+    });
+  </script>
+
+
+
+</body>
+
+</html>
