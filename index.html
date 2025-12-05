@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rising Scholars School System</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="shortcut icon" href="./1.png" type="image/x-icon">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+    /* hero slider */
+    /* upcoming events */
+    #newEvent {
+      width: 200px;
+      height: 35px;
+      border-radius: 5px;
+      border: #97c0f5;
+      border-style: double;
+      font-style: italic;
+      font-weight: 700;
+      color: #6a9de9;
+    }
+
+    .box {
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    /* EVENT ITEMS — NOW RESPONSIVE */
+    .event-item {
+      background: linear-gradient(90deg, hwb(211 51% 5%) 0%, #97c0f5 100%);
+      font-size: 22px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-style: italic;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      /* FULL RESPONSIVE WIDTH */
+      max-width: 800px;
+      /* Center width limit */
+    }
+
+    /* Centering event items */
+    #eventList {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    #adminPanel {
+      display: none;
+    }
+
+    #loginBox {
+      max-width: 400px;
+      margin: auto;
+    }
+
+    /* ----------- RESPONSIVE BREAKPOINTS ----------- */
+
+    /* Tablet */
+    @media (max-width: 768px) {
+      .event-item {
+        font-size: 20px;
+        padding: 10px 14px;
+        max-width: 500px;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 500px) {
+      .event-item {
+        font-size: 18px;
+        flex-direction: column;
+        text-align: center;
+        gap: 6px;
+        max-width: 100%;
+      }
+    }
+
+
+    /*  winners slider    */
+
+    /*  winners slider    */
+    .winners-wrap {
+      width: 100%;
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .winners-head {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .winners-head .section-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #11356b;
+      margin: 6px 0;
+    }
+
+    .winners-head .section-sub {
+      color: #57606a;
+      margin: 0 0 14px;
+    }
+
+    /* slides area */
+    .winners-slider {
+      position: relative;
+      min-height: 280px;
+    }
+
+    .winner-slide {
+      display: none;
+      align-items: center;
+      gap: 26px;
+      padding: 18px;
+      transition: opacity .45s ease, transform .45s ease;
+    }
+
+    .winner-slide.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .winner-image {
+      width: 300px;
+      height: 300px;
+      border-radius: 18px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .winner-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .winner-content {
+      flex: 1;
+      max-width: 520px;
+    }
+
+    .winner-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #12122a;
+    }
+
+    .winner-text {
+      color: #4e4a67;
+      line-height: 1.5;
+      font-size: 16px;
+    }
+
+    /* controls */
+    .winners-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .dot {
+      width: 36px;
+      height: 10px;
+      background: #e2e2e2;
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all .25s ease;
+    }
+
+    .dot.active {
+      background: #11356b;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(17, 53, 107, 0.9);
+      color: white;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border: 0;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .arrow.left {
+      left: 12px;
+    }
+
+    .arrow.right {
+      right: 12px;
+    }
+
+    .arrow:focus {
+      outline: 2px solid #fff;
+    }
+
+    /* responsive */
+    @media (max-width: 820px) {
+      .winner-image {
+        width: 200px;
+        height: 200px;
+      }
+
+      .winner-title {
+        font-size: 24px;
+      }
+
+      .winner-text {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .winners-wrap {
+        padding: 12px;
+      }
+
+      .winner-slide {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+      }
+
+      .winner-image {
+        width: 160px;
+        height: 160px;
+      }
+
+      .winner-content {
+        max-width: 100%;
+      }
+
+      .dot {
+        width: 28px;
+        height: 8px;
+        border-radius: 4px;
+      }
+
+      .arrow {
+        width: 34px;
+        height: 34px;
+      }
+    }
+
+    /* ---------- RESET & BASE ---------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      font-family: Inter, Roboto, Arial, sans-serif;
+      color: #222;
+      background: #fff
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 90;
+      background: #fff;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 12px;
+    }
+
+    .brand img {
+      height: 120px;
+      width: 130px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-weight: 500;
+      color: #333;
+      padding: 6px 2px;
+    }
+
+    .nav-links a.active {
+      color: #1976d2;
+    }
+
+    .right-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-login {
+      background: transparent;
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* --------- MOBILE RESPONSIVE --------- */
+
+    .menu-btn {
+      font-size: 32px;
+      cursor: pointer;
+      display: none;
+    }
+
+    @media (max-width: 854px) {
+      .menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 85px;
+        right: -100%;
+        width: 260px;
+        background: #fff;
+        height: 100vh;
+        flex-direction: column;
+        padding: 20px 10px;
+        gap: 18px;
+        transition: 0.4s ease;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-links.show {
+        right: 0;
+      }
+
+      .right-actions {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      min-height: 420px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      transition: background-image 1s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      padding: 80px 20px 60px;
+    }
+
+    /* dark overlay for text visibility */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    .hero .wrap {
+      max-width: 1000px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 54px;
+      line-height: 1.02;
+      margin-bottom: 14px;
+      font-weight: 800;
+    }
+
+    .hero p.lead {
+      font-size: 18px;
+      opacity: 0.95;
+      margin-bottom: 18px;
+    }
+
+    .hero .supervisor {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-top: 20px;
+    }
+
+    .hero .cta {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .cta .primary {
+      background: #ffc107;
+      border: 0;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .cta .outline {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      padding: 10px 18px;
+      font-weight: 800;
+      border-radius: 9px;
+      color: white;
+    }
+
+    /* ---------- CONTAINER & SECTIONS ---------- */
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 48px 20px
+    }
+
+    h2.section-title {
+      font-size: 34px;
+      font-weight: 800;
+      color: #1976d2;
+      text-align: center;
+      margin-bottom: 8px
+    }
+
+    p.section-sub {
+      color: #6b7280;
+      text-align: center;
+      margin-bottom: 28px
+    }
+
+    /* ---------- ACTIVITIES CARDS ---------- */
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 28px;
+    }
+
+    /* Card Styles */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(16, 24, 40, 0.06);
+    }
+
+    .card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
+    .card-body h3 {
+      color: #1976d2;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .card-body p {
+      color: #6b7280;
+      font-size: 15px;
+    }
+
+    /* ---------- RESPONSIVE BREAKPOINTS ---------- */
+
+    /* Tablet → 2 columns */
+    @media (max-width: 992px) {
+      .activities-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Mobile → 1 column */
+    @media (max-width: 600px) {
+      .activities-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card img {
+        height: 200px;
+      }
+    }
+
+
+    /* ---------- EVENTS CALENDAR ---------- */
+    .events {
+      background: linear-gradient(90deg, #f0f7ff, #fff7fb);
+      padding: 22px;
+      border-radius: 12px;
+      margin-top: 30px
+    }
+
+    .calendar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 12px
+    }
+
+    .day {
+      background: #fff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(16, 24, 40, 0.04);
+      font-weight: 700
+    }
+
+    .day.special {
+      background: linear-gradient(90deg, #fff6e6, #fff1f1);
+      color: #b30000
+    }
+
+
+    /* ---------- TEACHERS ---------- */
+    .teacher-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+
+    .teacher {
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: .4s;
+    }
+
+    #t1 {
+      height: 300px;
+    }
+
+    .teacher:hover {
+      transform: scale(1.05);
+    }
+
+    .teacher img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    /* ---------- TOP PERFORMERS ---------- */
+    .performer-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(16, 24, 40, 0.05);
+      margin: 20px 0
+    }
+
+    .perf-photo {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      overflow: hidden
+    }
+
+    .perf-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .perf-body h4 {
+      color: #1976d2;
+      font-size: 22px
+    }
+
+    .perf-body p {
+      color: #6b7280
+    }
+
+
+    /* ---------- TIMELINE ---------- */
+    .timeline {
+      position: relative;
+      padding-left: 80px
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 40px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #e6f0ff;
+      border-radius: 2px
+    }
+
+    .timeline-item {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 30px rgba(16, 24, 40, 0.04);
+      position: relative
+    }
+
+    .timeline-item .year {
+      position: absolute;
+      left: -12px;
+      top: 18px;
+      background: #1976d2;
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 18px;
+      font-weight: 700
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: linear-gradient(90deg, #2b8bf0 0%, #66a8ff 100%);
+      color: #fff;
+      padding: 40px 20px;
+      margin-top: 40px
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px
+    }
+
+    .footer-inner p {
+      opacity: 0.9
+    }
+
+    /* ---------- CHAT ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", Arial;
+    }
+
+    body {
+      background: #eef3f8;
+      min-height: 100vh;
+    }
+
+    /* TOGGLE BUTTON */
+    .toggle-btn {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      background: #1d4e89;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      z-index: 300;
+      transition: 0.3s ease;
+    }
+
+    .toggle-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* CHATBOX */
+    .chatbox {
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      width: 320px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: .3s ease;
+    }
+
+    /* SHOW */
+    .chatbox.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* HEADER */
+    .chat-header {
+      background: #1d4e89;
+      padding: 15px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* CHAT AREA */
+    .chat-area {
+      height: 280px;
+      overflow-y: auto;
+      padding: 12px;
+      background: #f7f9fc;
+    }
+
+    /* MESSAGES */
+    .msg {
+      max-width: 85%;
+      margin: 8px 0;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .user-msg {
+      background: #d5e6ff;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .bot-msg {
+      background: #fff;
+      border-left: 4px solid #1d4e89;
+    }
+
+    /* INPUT AREA */
+    .input-area {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
+    .input-area input {
+      padding: 12px;
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 14px;
+    }
+
+    .input-area button {
+      background: #1d4e89;
+      color: white;
+      padding: 0 18px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* TYPING ANIMATION */
+    .typing {
+      width: 30px;
+      height: 10px;
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      margin-left: 5px;
+    }
+
+    .typing span {
+      width: 7px;
+      height: 7px;
+      background: #1d4e89;
+      border-radius: 50%;
+      animation: blink 1.4s infinite alternate;
+    }
+
+    .typing span:nth-child(2) {
+      animation-delay: .2s;
+    }
+
+    .typing span:nth-child(3) {
+      animation-delay: .4s;
+    }
+
+    @keyframes blink {
+      from {
+        opacity: .2;
+        transform: translateY(0);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(-3px);
+      }
+    }
+
+    /* admin button */
+
+
+    /* POPUP BACKGROUND */
+    .popup-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* LOGIN BOX */
+    .login-box {
+      background: white;
+      width: 300px;
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #bbb;
+    }
+
+    #milad {
+      width: 100%;
+      height: 300px;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 10px;
+      background: #1d4e89;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+
+    /* loader */
+    /* Full screen loader */
+    #fancy-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Loader text + dots wrapper */
+    .loader-inner p {
+      font-size: 18px;
+      color: #1976d2;
+      font-weight: 500;
+      letter-spacing: 1px;
+      display: inline-flex;
+      align-items: center;
+      /* dots vertically center with text */
+      gap: 8px;
+      /* space between text and dots */
+    }
+
+    /* Dots */
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #1976d2;
+      animation: bounce 1.2s infinite ease-in-out;
+      display: inline-block;
+    }
+
+    .dot1 {
+      animation-delay: 0s;
+      background: #1976d2;
+    }
+
+    .dot2 {
+      animation-delay: 0.2s;
+      background: #6a9de9;
+    }
+
+    .dot3 {
+      animation-delay: 0.4s;
+      background: #97c0f5;
+    }
+
+    .dot4 {
+      animation-delay: 0.6s;
+      background: #1976d2;
+    }
+
+    /* Bounce animation */
+    @keyframes bounce {
+
+      0%,
+      80%,
+      100% {
+        transform: scale(0);
+      }
+
+      40% {
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Loader -->
+  <!-- Fancy Loader -->
+  <!-- Fancy Loader -->
+  <div id="fancy-loader">
+    <div class="loader-inner">
+      <p>Loading Rising Scholars
+        <span class="dot dot1"></span>
+        <span class="dot dot2"></span>
+        <span class="dot dot3"></span>
+        <span class="dot dot4"></span>
+      </p>
+    </div>
+  </div>
+
+
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-inner">
+
+      <div class="brand">
+        <img src="./1.png" alt="Logo">
+      </div>
+
+      <!-- Hamburger Menu -->
+      <div class="menu-btn" id="menuBtn">
+        ☰
+      </div>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#home" class="active">Home</a>
+        <a href="./admision.html">Admission Form</a>
+        <a href="#userEvents">Up Coming Events</a>
+        <a href="./achivment.html">Student Achievement</a>
+        <a href="./contact.html">Contact Us</a>
+        <a href="./gallery.html">Gallery</a>
+        <div class="right-actions">
+          <div id="loginBox" class="box"><button id="loginBtn" class="btn-login">Admin Login</button>
+          </div>
+        </div>
+        <div class="popup-bg" id="popup">
+          <div class="login-box">
+            <h2>Admin Login</h2>
+
+            <input type="text" id="email" placeholder="Enter Email">
+
+            <input type="password" id="password" placeholder="Enter Password">
+
+            <button onclick="login()">Login</button>
+
+            <div class="error" id="errorMsg"></div>
+          </div>
+      </nav>
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="wrap">
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <h1>Rising Scholars Secondary School</h1><br />
+      <p class="lead">“Where curiosity turns into knowledge, knowledge becomes confidence, <br>
+        and confidence shapes students into successful, <br>
+        bright individuals ready to conquer the world.
+      </p><br /></br>
+
+      <div class="cta">
+        <button class="primary"><a href="./gallery.html">Explore Program</a></button>
+        <button class="outline"><a href="#contact">Contact</a> Us</button>
+      </div>
+
+      <br /><br />
+    </div>
+  </section>
+
+
+
+  <br /><br /><br /><br /><br /><br /><br /><br /><br /> <!-- ACTIVITIES -->
+  <main class="container">
+    <section id="activities">
+      <h2 class="section-title">Our Activities</h2> <br />
+      <p class="section-sub">Innovative programs carefully crafted to encourage growth, <br>
+        unleash creativity, and build a lifelong love for learning, <br>
+        empowering students to explore, imagine, <br> and achieve more every day.</p> </br>
+      <div class="activities-grid">
+        <div class="card"><img src="./School Pic/41.jpg" id="milad" alt="Sports">
+          <div class="card-body">
+            <h3>Our Sports</h3></br>
+            <p>Our sports program builds confidence,strengthens teamwork,
+              and encourages every student to compete with passion, discipline, and a winning spirit.</p>
+          </div>
+        </div>
+        <div class="card"><img src="./School Pic/242.jpg" id="milad" alt="Science">
+          <div class="card-body">
+            <h3>Our Milad</h3></br>
+            <p>A sacred event where voices unite in praise, hearts soften with remembrance, <br>
+              and students learn the true values of kindness, <br> mercy, and compassion taught by the Prophet .</p>
+          </div>
+        </div>
+        <div class="card"><img src="./School Pic/39.jpg" id="milad" alt="Cultural">
+          <div class="card-body">
+            <h3>Our Science Exibition</h3></br>
+            <p>Our Science Exhibition inspires students to question, explore, and invent—encouraging a strong scientific
+              mindset that prepares them for a future full of discovery and achievement.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- up coming events -->
+
+      <br><br><br><br><br><br><br><br><br><br><br>
+      <div id="adminPanel" class="box">
+        <h2 class="section-title">Admin Event Control</h2>
+
+        <input type="text" id="newEvent" placeholder="Enter New Event…">
+        <button class="btn-login" style="background:rgb(119, 160, 247); margin-left: 15px; margin-top:20px;"
+          onclick="addEvent()">Add Event</button>
+        <br><br><br>
+        <div id="adminEventList"></div>
+
+        <button style="background:red; margin-top:20px;" class="btn-login" onclick="logout()">Sign Out</button>
+      </div>
+
+
+      <div id="userEvents" class="box">
+        <h2 class="section-title">Upcoming Events</h3>
+          <p class="section-sub">We have exciting events planned to enrich learning and celebrate talents.</p>
+
+          <br /><br><br>
+          <center>
+            <div id="eventList"></div>
+          </center>
+      </div>
+    </section> </br></br></br></br></br></br></br></br></br>
+
+    <!-- WINNERS -->
+
+    <h2 class="section-title">Our Winners</h2></br>
+    <p class="section-sub">We celebrate the achievements of our students in academics, sports, and competitions.</p>
+    <br><br><br>
+
+    <div class="winners-wrap" id="winners-component">
+      <div class="winners-slider" id="winners-slider">
+        <!-- Slide 1 -->
+        <div class="winner-slide active" data-index="0">
+          <div class="winner-image"><img id="ch" src="./School Pic/c1 (1).jpg" alt="Urwa"></div>
+          <div class="winner-content">
+            <div class="winner-title">Urwa - Speech Winner</div>
+            <div class="winner-text">Always focused on her studies, manages her time well, and sets a great example for
+              others.</div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="winner-slide" data-index="1">
+          <div class="winner-image"><img id="ch" src="./School Pic/c3.jpg" alt="Areesha"></div>
+          <div class="winner-content">
+            <div class="winner-title">Areesha - Naat Winner</div>
+            <div class="winner-text">Loves to participate in every event, shows enthusiasm, and motivates her classmates
+              to join.</div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="winner-slide" data-index="2">
+          <div class="winner-image"><img id="ch" src="./School Pic/c2.jpg" alt="Naveera"></div>
+          <div class="winner-content">
+            <div class="winner-title">Naveera - Sports Winner</div>
+            <div class="winner-text">Always gives her best in competitions, works hard, and never gives up even on
+              challenges.</div>
+          </div>
+        </div>
+
+        <!-- arrows -->
+        <button class="arrow left" aria-label="Previous" id="winners-prev">&#10094;</button>
+        <button class="arrow right" aria-label="Next" id="winners-next">&#10095;</button>
+      </div>
+
+      <!-- dots -->
+      <div class="winners-controls" id="winners-dots">
+        <div class="dot active" data-index="0" tabindex="0" role="button" aria-label="Slide 1"></div>
+        <div class="dot" data-index="1" tabindex="0" role="button" aria-label="Slide 2"></div>
+        <div class="dot" data-index="2" tabindex="0" role="button" aria-label="Slide 3"></div>
+      </div>
+    </div>
+    </br></br></br></br></br></br></br></br> </br></br></br></br></br></br></br></br>
+    <!-- Meet Our Leaders -->
+    <section id="teachers">
+      <h2 class="section-title">Meet Our Leaders</h2><br>
+      <p class="section-sub">
+        Our Leaders are inspiring individuals who guide, motivate, and support <br>
+        others with dedication, talent, and vision. They lead by example, <br>
+        encouraging everyone to aim higher, work harder, and achieve their best.
+      </p></br>
+      <br><br><br><br><br>
+      <div class="teacher-grid">
+        <div class="teacher"><img id="t1" src="./School Pic/sir.jpg"><br><br><br>
+          <h3>Sir Safdar Hussain</h3><br>
+          <p>Director</p>
+        </div>
+        <div class="teacher"><img id="t1" src="./School Pic/101.jpg"><br><br><br>
+          <h3>Mam Naseem</h3><br>
+          <p>Principle</p>
+        </div>
+        <div class="teacher">
+          <img id="t1" src="./School Pic/22.jpg"><br><br><br>
+          <h3>Mam Nargis</h3><br>
+          <p>Vise Principle</p>
+        </div>
+      </div>
+      <br><br><br><br><br><br><br> <br><br><br><br><br><br><br>
+    </section>
+    <!-- TEACHERS -->
+
+    <section id="teachers">
+      <h2 class="section-title">Our Teachers</h2><br>
+      <p class="section-sub">
+        Our Teachers are the guiding light of our school, dedicated to nurturing every <br>
+        student’s potential with knowledge, patience, and care. They inspire curiosity, <br>
+        encourage creativity, and provide unwavering support, helping students overcome <br>
+        challenges and achieve their best. Beyond academics, our teachers shape character, <br>
+        build confidence, and instill values that last a lifetime
+      </p></br>
+      <br><br><br><br><br>
+      <div class="teacher-grid">
+        <div class="teacher"><img id="t1" src="./School Pic/239.jpg"><br><br><br>
+          <h3>Mam Ayesha</h3><br>
+          <p>Math Teacher</p>
+        </div>
+        <div class="teacher"><img id="t1" src="./School Pic/23.jpg"><br><br><br>
+          <h3>Mam Komal</h3><br>
+          <p>Computer Teacher</p>
+        </div>
+        <div class="teacher">
+          <img id="t1" src="./School Pic/mam.jpg"><br><br><br>
+          <h3>Mam Muqadassa</h3><br>
+          <p>Chemistry Teacher</p>
+        </div>
+      </div>
+      <br><br><br><br><br><br><br>
+      <div class="teacher-grid">
+        <div class="teacher"><img id="t1" src="./School Pic/183.jpg"><br><br><br>
+          <h3>Mam Ruqaiya</h3><br>
+          <p>Quarn Teacher</p>
+        </div>
+        <div class="teacher"><img id="t1" src="./School Pic/102 - Copy.jpg"><br><br><br>
+          <h3>Mam Atiya</h3><br>
+          <p>Physic Teacher</p>
+        </div>
+        <div class="teacher">
+          <img id="t1" src="./School Pic/mam1.jpg"><br><br><br>
+          <h3>Mam Fiza</h3><br>
+          <p>Islamiyat eacher</p>
+        </div>
+      </div>
+      <br><br><br><br><br><br><br>
+      <div class="teacher-grid">
+        <div class="teacher"><img id="t1" src="./School Pic/22.jpg"><br><br><br>
+          <h3>Mam Nargis</h3><br>
+          <p>Urdu Teacher</p>
+        </div>
+        <div class="teacher"><img id="t1" src="./School Pic/185.jpg"><br><br><br>
+          <h3>Mam Komal</h3><br>
+          <p>English Teacher</p>
+        </div>
+        <div class="teacher">
+          <img id="t1" src="./School Pic/89.jpg"><br><br><br>
+          <h3>Mam Urwa</h3><br>
+          <p>Geography Teacher</p>
+        </div>
+
+      </div>
+    </section>
+
+    </br></br></br></br></br></br></br></br></br></br></br> <!-- EDUCATION TIMELINE -->
+    <section id="education">
+      <h2 class="section-title">Our Educational Journey</h2></br>
+      <p class="section-sub">A timeline of growth and achievement</p></br></br></br>
+      <div class="timeline">
+        <div class="timeline-item"><span class="year">1998</span></br></br></br>
+          <h3>Foundation Laid</h3>
+          <br>
+          <p>Our school was established in 1998 with a vision to provide quality education<br>
+            nurturing young minds and shaping bright futures. The journey began <br>
+            with a small team of dedicated teachers and a handful of enthusiastic students.</br>
+          </p>
+        </div> </br>
+        <div class="timeline-item"><span class="year">2002</span></br></br></br>
+          <h3>First Milestone</h3></br>
+          <p>Within a few years, our school expanded its facilities and introduced new classes<br>
+            welcoming more students and fostering a culture of learning, curiosity, and growth.</p>
+        </div> </br>
+        <div class="timeline-item"><span class="year">2007</span></br></br></br>
+          <h3>Academic Excellence</h3></br>
+          <p>By 2007, our school gained recognition for its commitment to academic excellence <br>
+            with students achieving remarkable results in local and regional examinations.</p>
+        </div> </br>
+        <div class="timeline-item"><span class="year">2012</span></br></br></br>
+          <h3>Extracurricular Growth</h3></br>
+          <p>The school began focusing on extracurricular activities, including sports, arts<br>
+            and cultural events, ensuring students developed holistically beyond academics.</p>
+        </div><br>
+        <div class="timeline-item"><span class="year">2015</span></br></br></br>
+          <h3>Technological Advancements</h3></br>
+          <p>Smart classrooms, modern labs, and computer facilities were introduced<br>
+            embracing innovation and preparing students for a fast-evolving world.</p>
+        </div><br>
+        <div class="timeline-item"><span class="year">2018</span></br></br></br>
+          <h3>Celebrating 20 Years</h3></br>
+          <p>Our school proudly celebrated its 20th anniversary, reflecting on two decades of growth<br>
+            achievements, and the countless students whose lives were positively transformed.</p>
+        </div><br>
+        <div class="timeline-item"><span class="year">2012</span></br></br></br>
+          <h3>Modern Achievements</h3></br>
+          <p>With continuous improvements in academics, extracurriculars, and student support, the school <br>
+            continues to inspire, guide, and empower learners to reach their highest potential.</p>
+        </div>
+        <br>
+        <div class="timeline-item"><span class="year">2025</span></br></br></br>
+          <h3>Today and Beyond</h3></br>
+          <p>Today, our school stands as a symbol of dedication, excellence, and <br>
+            innovation, committed to shaping the leaders, thinkers, and changemakers of tomorrow.</p>
+        </div>
+      </div>
+    </section>
+
+    </br></br></br></br></br></br></br></br></br> <!-- TOP PERFORMERS -->
+    <section id="toppers">
+      <h2 class="section-title">Top Performers</h2></br>
+      <p class="section-sub">Outstanding academic achievements</p></br></br></br>
+      <div class="performer-card">
+        <div class="perf-photo"><img src="./School Pic/sr.jpg" alt="perf"></div>
+        <div class="perf-body">
+          <h4>Aimma Noor</h4></br>
+          <p style="color:#f0a500;font-weight:700">Student Of Class 7th</p></br>
+          <p>
+            She is a toppers who inspire others with their commitment, confidence,
+            <br> and determination to reach new heights.
+
+          </p></br>
+        </div>
+      </div>
+
+      <br><br><br><br>
+      <div class="performer-card">
+        <div class="perf-photo"><img src="./School Pic/sr2.jpg" alt="perf"></div>
+        <div class="perf-body">
+          <h4>Muqadas Fatima</h4></br>
+          <p style="color:#f0a500;font-weight:700">Student Of Class 8th</p></br>
+          <p>
+            She is a brilliant students which have achieved top positions by staying disciplined, <br>
+            managing their time wisely, and giving their best in every subject.
+          </p></br>
+        </div>
+      </div>
+      <br><br><br><br>
+      <div class="performer-card">
+        <div class="perf-photo"><img src="./School Pic/sr4.jpg" alt="perf"></div>
+        <div class="perf-body">
+          <h4>Rabia Butt</h4></br>
+          <p style="color:#f0a500;font-weight:700">Student Of Class 9th</p></br>
+          <p>
+            She is a toppers which have shown exceptional dedication, strong focus, and outstanding academic <br>
+            performance throughout the year. Their hard work and consistency make <br>
+            them a source of pride for our school. <br>
+          </p></br>
+        </div>
+      </div>
+      <br><br><br><br>
+      <div class="performer-card">
+        <div class="perf-photo"><img src="./School Pic/sr3.jpg" alt="perf"></div>
+        <div class="perf-body">
+          <h4>Fatima Haroon</h4></br>
+          <p style="color:#f0a500;font-weight:700">Student Of Class 10th</p></br>
+          <p>
+
+            She have proven that success comes from patience, effort,
+            <br> and the courage to never give up.
+
+          </p></br>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  </br></br></br></br></br></br>
+  </br></br></br></br></br></br>
+  </br></br></br></br></br></br>
+  <!-- FOOTER -->
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h3 style="color:#fff;margin-bottom:8px">Rising Scholars School</h3>
+        <p style="color:rgba(255,255,255,0.85)">Empowering students — Building futures</p>
+      </div>
+      <div style="color:rgba(255,255,255,0.9)">
+        <p>
+          <a href="https://wa.me/923459876895" target="_blank" style="text-decoration:none; color:inherit;">
+            Phone 📱: +92 0345-9876895
+          </a>
+        </p>
+        <br>
+        <p>Email 📧: rsss.taxila@gmail.com'</p> </br>
+        <p>Address 🏡: Near Flour Mill,Taxila,Pakistan</p> </br>
+      </div>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,0.8);margin-top:18px">© 2025 Rising Scholars — All Rights
+      Reserved</p>
+  </footer>
+
+
+  <!-- CHAT -->
+  <div class="toggle-btn" id="toggleBtn">💬</div>
+
+  <div class="chatbox" id="chatbox">
+    <div class="chat-header">Shool Information Bot</div>
+
+    <div class="chat-area" id="chatArea"></div>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type here...">
+      <button onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+
+
+  <script>
+    // hero section
+
+    const images = [
+      "./School Pic/87.jpg",
+      "./School Pic/46.jpg",
+      "./School Pic/42.jpg",
+      "./School Pic/110.jpg",
+      "./School Pic/106.jpg"
+    ];
+
+    let currentIndex = 0;
+    const hero = document.querySelector(".hero");
+
+    function changeBackground() {
+      hero.style.backgroundImage = `url('${images[currentIndex]}')`;
+      currentIndex = (currentIndex + 1) % images.length;
+    }
+
+    changeBackground(); // first image
+    setInterval(changeBackground, 4000); // change every 4 sec
+
+    // navbar
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    menuBtn.onclick = () => {
+      navLinks.classList.toggle("show");
+    };
+
+    // admin button
+    let loginBtn = document.getElementById("loginBtn");
+    let popup = document.getElementById("popup");
+    let errorMsg = document.getElementById("errorMsg");
+
+    // YOUR ADMIN LOGIN DETAILS
+    const ADMIN_EMAIL = "rsss.taxila@gmail.com";
+    const ADMIN_PASSWORD = "Rsss123";
+
+    loginBtn.onclick = () => {
+      if (loginBtn.innerText === "Logout") {
+        loginBtn.innerText = "Login";
+        alert("You are logged out successfully!");
+      } else {
+        popup.style.display = "flex";
+      }
+    };
+
+    function checkLogin() {
+      let email = document.getElementById("email").value.trim();
+      let password = document.getElementById("password").value.trim();
+
+      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+
+        popup.style.display = "none";
+        loginBtn.innerText = "Logout";
+        errorMsg.innerText = "";
+
+        alert("Login successful! Welcome Admin.");
+
+      } else {
+        errorMsg.innerText = "You are not admin!";
+      }
+    }
+
+    // Close popup by clicking outside
+    popup.onclick = (e) => {
+      if (e.target === popup) popup.style.display = "none";
+    };
+
+    // chaat
+    const toggleBtn = document.getElementById("toggleBtn");
+    const chatbox = document.getElementById("chatbox");
+    const chatArea = document.getElementById("chatArea");
+    const userInput = document.getElementById("userInput");
+
+    toggleBtn.onclick = () => {
+      chatbox.classList.toggle("show");
+      toggleBtn.innerHTML = chatbox.classList.contains("show") ? "✖" : "💬";
+    };
+
+    function sendMsg() {
+      let text = userInput.value.trim();
+      if (!text) return;
+
+      // USER MESSAGE
+      addMsg(text, "user");
+
+      userInput.value = "";
+
+      // BOT TYPING ANIMATION
+      let typing = document.createElement("div");
+      typing.className = "typing bot-msg";
+      typing.innerHTML = `<span></span><span></span><span></span>`;
+      chatArea.appendChild(typing);
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      setTimeout(() => {
+        typing.remove();
+        botReply(text);
+      }, 1200);
+    }
+
+    function addMsg(text, type) {
+      let div = document.createElement("div");
+      div.className = "msg " + (type === "user" ? "user-msg" : "bot-msg");
+      div.innerText = text;
+      chatArea.appendChild(div);
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function botReply(input) {
+      input = input.toLowerCase();
+
+      let reply = "";
+
+      if (input.includes("fee")) reply = "So our AdMamion fee is Rs. 3000 only.";
+      else if (input.includes("location")) reply = "We are located at Timber Market Road, Taxila.";
+      else if (input.includes("supervisor")) reply = "Supervisor: Sir Safdar Hussain Anjum.";
+      else if (input.includes("adMamion")) reply = "AdMamions are open now!";
+      else if (input.includes("school")) reply = "Our  school is very good in education and in everything!";
+      else if (input.includes("hi")) reply = "Hello! Tell me how can i help you";
+      else if (input.includes("bye")) reply = "Thank you for contacting us! If you need any information we are always avalabile for you";
+      else reply = "Thank you! Our team will contact you soon.";
+
+      addMsg(reply, "bot");
+    }
+    //  anonymus
+
+    const links = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('main section, .hero');
+
+    //  code of upcoming events
+
+
+
+    // ------------------ LOCAL STORAGE SYSTEM ------------------
+    let events = JSON.parse(localStorage.getItem("events")) || [];
+
+    // ------------------ DISPLAY EVENTS ------------------
+    function showEvents() {
+      let userList = document.getElementById("eventList");
+      let adminList = document.getElementById("adminEventList");
+
+      userList.innerHTML = "";
+      adminList.innerHTML = "";
+
+      events.forEach((ev, i) => {
+        // USER DISPLAY
+        userList.innerHTML += `<div class='event-item'>${ev}</div>`;
+
+        // ADMIN DISPLAY
+        adminList.innerHTML += `
+            <div class='event-item'>
+                ${ev}
+                <button style="background:red; width:auto;" class="btn-login" onclick="delEvent(${i})">Delete</button>
+            </div>
+        `;
+      });
+    }
+    showEvents();
+
+    // ------------------ ADD EVENT ------------------
+    function addEvent() {
+      let val = document.getElementById("newEvent").value;
+      if (val.trim() === "") return alert("Write an event first!");
+
+      events.push(val);
+      localStorage.setItem("events", JSON.stringify(events));
+      document.getElementById("newEvent").value = "";
+      showEvents();
+    }
+
+    // ------------------ DELETE EVENT ------------------
+    function delEvent(index) {
+      events.splice(index, 1);
+      localStorage.setItem("events", JSON.stringify(events));
+      showEvents();
+    }
+
+    // ------------------ LOGIN SYSTEM ------------------
+    function login() {
+      let email = document.getElementById("email").value;
+      let pass = document.getElementById("password").value;
+
+      if (email === "rsss.taxila@gmail.com" && pass === "Rsss123") {
+        localStorage.setItem("admin", "true");
+        document.getElementById("popup").style.display = "none"; // hide popup
+        showAdminPanel();
+      } else {
+        document.getElementById("errorMsg").innerText = "❌ You are not admin!";
+      }
+    }
+
+    // ------------------ LOGOUT ------------------
+    function logout() {
+      localStorage.removeItem("admin");
+      location.reload();
+    }
+    // ------------------ SHOW PANEL ------------------
+    function showAdminPanel() {
+      let isAdmin = localStorage.getItem("admin");
+
+      if (isAdmin) {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+      }
+    }
+    showAdminPanel();
+    // ------------------ SHOW LOGIN POPUP ------------------
+    document.getElementById("loginBtn").addEventListener("click", function () {
+      document.getElementById("popup").style.display = "flex";
+    });
+
+    // loader
+    window.addEventListener("load", function () {
+      const loader = document.getElementById("fancy-loader");
+      loader.style.opacity = "0";
+      loader.style.transition = "opacity 0.5s ease";
+      setTimeout(() => { loader.style.display = "none"; }, 1000);
+    });
+
+
+    // winners
+
+
+
+
+    (function () {
+      const slider = document.getElementById('winners-slider');
+      const slides = Array.from(slider.querySelectorAll('.winner-slide'));
+      const dots = Array.from(document.getElementById('winners-dots').querySelectorAll('.dot'));
+      const prevBtn = document.getElementById('winners-prev');
+      const nextBtn = document.getElementById('winners-next');
+      let current = 0;
+      let autoTimer = null;
+      const AUTO_DELAY = 5000; // 5s auto-slide (optional)
+
+      function showSlide(index) {
+        index = (index + slides.length) % slides.length;
+        slides.forEach((s, i) => {
+          s.classList.toggle('active', i === index);
+        });
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+        current = index;
+      }
+
+      // dot clicks / keyboard accessible
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          showSlide(parseInt(dot.dataset.index));
+          resetAuto();
+        });
+        dot.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            dot.click();
+          }
+        });
+      });
+
+      prevBtn.addEventListener('click', () => { showSlide(current - 1); resetAuto(); });
+      nextBtn.addEventListener('click', () => { showSlide(current + 1); resetAuto(); });
+
+      // swipe support for touch
+      let startX = null;
+      slider.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+      slider.addEventListener('touchend', (e) => {
+        if (startX === null) return;
+        const endX = (e.changedTouches && e.changedTouches[0].clientX) || 0;
+        const dx = endX - startX;
+        if (Math.abs(dx) > 40) {
+          if (dx < 0) showSlide(current + 1); else showSlide(current - 1);
+          resetAuto();
+        }
+        startX = null;
+      });
+
+      // auto slide
+      function startAuto() {
+        stopAuto();
+        autoTimer = setInterval(() => showSlide(current + 1), AUTO_DELAY);
+      }
+      function stopAuto() { if (autoTimer) clearInterval(autoTimer); autoTimer = null; }
+      function resetAuto() { stopAuto(); startAuto(); }
+
+      // init
+      showSlide(0);
+      startAuto();
+
+      // pause on hover/focus (nice UX)
+      document.getElementById('winners-component').addEventListener('mouseover', stopAuto);
+      document.getElementById('winners-component').addEventListener('mouseleave', startAuto);
+    })();
+
+  </script>
+
+
+
+</body>
+
+</html>

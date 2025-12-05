@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rising Scholars School System</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="shortcut icon" href="./1.png" type="image/x-icon">
+  <style>
+
+    /* ---------- RESET & BASE ---------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      font-family: Inter, Roboto, Arial, sans-serif;
+      color: #222;
+      background: #fff
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    /* ---------- NAVBAR ---------- */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 90;
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.nav-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 12px;
+}
+
+.brand img {
+  height: 120px;
+  width: 130px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.nav-links a {
+  font-weight: 500;
+  color: #333;
+  padding: 6px 2px;
+}
+
+.nav-links a.active {
+  color: #1976d2;
+}
+
+.right-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-login {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* --------- MOBILE RESPONSIVE --------- */
+
+.menu-btn {
+  font-size: 32px;
+  cursor: pointer;
+  display: none;
+}
+
+@media (max-width: 854px) {
+  .menu-btn {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 85px;
+    right: -100%;
+    width: 260px;
+    background: #fff;
+    height: 100vh;
+    flex-direction: column;
+    padding: 20px 10px;
+    gap: 18px;
+    transition: 0.4s ease;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+  }
+
+  .nav-links.show {
+    right: 0;
+  }
+
+  .right-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+    /* ---------- CONTAINER & SECTIONS ---------- */
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 48px 20px
+    }
+
+    h2.section-title {
+      font-size: 34px;
+      font-weight: 800;
+      color: #1976d2;
+      text-align: center;
+      margin-bottom: 8px
+    }
+
+    p.section-sub {
+      color: #6b7280;
+      text-align: center;
+      margin-bottom: 28px
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: linear-gradient(90deg, #2b8bf0 0%, #66a8ff 100%);
+      color: #fff;
+      padding: 40px 20px;
+      margin-top: 40px
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px
+    }
+
+    .footer-inner p {
+      opacity: 0.9
+    }
+
+    /* ---------- CHAT ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", Arial;
+    }
+
+    body {
+      background: #eef3f8;
+      min-height: 100vh;
+    }
+
+    /* TOGGLE BUTTON */
+    .toggle-btn {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      background: #1d4e89;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      z-index: 300;
+      transition: 0.3s ease;
+    }
+
+    .toggle-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* CHATBOX */
+    .chatbox {
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      width: 320px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: .3s ease;
+    }
+
+    /* SHOW */
+    .chatbox.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* HEADER */
+    .chat-header {
+      background: #1d4e89;
+      padding: 15px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* CHAT AREA */
+    .chat-area {
+      height: 280px;
+      overflow-y: auto;
+      padding: 12px;
+      background: #f7f9fc;
+    }
+
+    /* MESSAGES */
+    .msg {
+      max-width: 85%;
+      margin: 8px 0;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .user-msg {
+      background: #d5e6ff;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .bot-msg {
+      background: #fff;
+      border-left: 4px solid #1d4e89;
+    }
+
+    /* INPUT AREA */
+    .input-area {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
+    .input-area input {
+      padding: 12px;
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 14px;
+    }
+
+    .input-area button {
+      background: #1d4e89;
+      color: white;
+      padding: 0 18px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* TYPING ANIMATION */
+    .typing {
+      width: 30px;
+      height: 10px;
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      margin-left: 5px;
+    }
+
+    .typing span {
+      width: 7px;
+      height: 7px;
+      background: #1d4e89;
+      border-radius: 50%;
+      animation: blink 1.4s infinite alternate;
+    }
+
+    .typing span:nth-child(2) {
+      animation-delay: .2s;
+    }
+
+    .typing span:nth-child(3) {
+      animation-delay: .4s;
+    }
+
+    @keyframes blink {
+      from {
+        opacity: .2;
+        transform: translateY(0);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(-3px);
+      }
+    }
+
+    /* admin button */
+
+
+    /* POPUP BACKGROUND */
+    .popup-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* LOGIN BOX */
+    .login-box {
+      background: white;
+      width: 300px;
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #bbb;
+    }
+#milad{
+  width: 100%;
+  height: 300px;
+}
+    .login-box button {
+      width: 100%;
+      padding: 10px;
+      background: #1d4e89;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+/* Gallery full page */
+  
+        .gallery-container {
+            width: 92%;
+            max-width: 1300px;
+            margin: 40px auto;
+        }
+
+        /* GRID 3 PER ROW */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        /* CARD DESIGN */
+        .card {
+            background: #ffffff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        /* IMAGE STYLE */
+        .card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+
+        /* TEXT UNDER IMAGE */
+        .card p {
+            text-align: center;
+            font-size: 18px;
+            padding: 12px;
+            margin: 0;
+            background: #f8fafc;
+            color: #334155;
+            font-weight: 500;
+        }
+ 
+  </style>
+</head>
+
+<body>
+<!-- Loader -->
+<!-- Fancy Loader -->
+<!-- Fancy Loader -->
+<div id="fancy-loader">
+  <div class="loader-inner">
+    <p>Loading Rising Scholars
+      <span class="dot dot1"></span>
+      <span class="dot dot2"></span>
+      <span class="dot dot3"></span>
+      <span class="dot dot4"></span>
+    </p>
+  </div>
+</div>
+
+
+
+  <!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-inner">
+
+    <div class="brand">
+      <img src="./1.png" alt="Logo">
+    </div>
+
+    <!-- Hamburger Menu -->
+    <div class="menu-btn" id="menuBtn">
+      ☰
+    </div>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="./index.html" class="active">Home</a>
+      <a href="#activities">Admission Form</a>
+      <a href="./index.html#userEvents">Up Coming Events</a>
+      <a href="./achivment.html">Student Achievement</a>
+      <a href="./contact.html">Contact Us</a>
+      <a href="./gallery.html">Gallery</a>
+       <div class="right-actions">
+          <div id="loginBox" class="box"><button id="loginBtn" class="btn-login">Admin Login</button>
+          </div>
+        </div>
+        <div class="popup-bg" id="popup">
+          <div class="login-box">
+            <h2>Admin Login</h2>
+
+            <input type="text" id="email" placeholder="Enter Email">
+
+            <input type="password" id="password" placeholder="Enter Password">
+
+            <button onclick="login()">Login</button>
+
+            <div class="error" id="errorMsg"></div>
+          </div>
+    </nav>
+  </div>
+</header>
+
+  </br></br></br></br></br></br></br></br></br></br></br></br>
+    <h2  class="section-title">School Memories Gallery</h2>
+<br>
+    <div class="gallery-container">
+
+        <div class="gallery-grid">
+
+            <!-- ROW 1 -->
+                  <div class="card">
+                <img src="./School Pic/1.jpg" alt="">
+                <p>Iqbal Day</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/2.jpg" alt="">
+                <p>Iqbal Day</p>
+            </div>
+
+                        <div class="card">
+                <img src="./School Pic/6.jpg" alt="">
+                <p>Trip To Daman-e-koh</p>
+            </div>
+            <!-- ROW 2 -->
+
+
+            <div class="card">
+                <img src="./School Pic/7.jpg" alt="">
+                <p>Trip To Daman-e-koh</p>
+            </div>
+     <div class="card">
+                <img src="./School Pic/5.jpg" alt="">
+                <p>Group Photo</p>
+            </div>
+            <div class="card">
+                <img src="./School Pic/8.jpg" alt="">
+                <p>Group Photo</p>
+            </div>
+
+            <!-- ROW 3 -->
+            <div class="card">
+                <img src="./School Pic/13.jpg" alt="">
+                <p>Examination Hall</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/17.jpg" alt="">
+                <p>Examination Hall</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/18.jpg" alt="">
+                <p>Examination Hall</p>
+            </div>
+
+            <!-- ROW 4 -->
+            <div class="card">
+                <img src="./School Pic/242.jpg" alt="">
+                <p>Milad Day</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/15.jpg" alt="">
+                <p>Seach Cermony</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/69.jpg" alt="">
+                <p>Ptm Day</p>
+            </div>
+
+            <!-- ROW 5 -->
+            <div class="card">
+                <img src="./School Pic/55.jpg" alt="">
+                <p>Ptm Day</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/54.jpg" alt="">
+                <p>Ptm Day</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/102.jpg" alt="">
+                <p>Teacher Group Photo</p>
+            </div>
+       <!-- ROW 6 -->
+            <div class="card">
+                <img src="./School Pic/103.jpg" alt="">
+                <p>Teacher Group Photo</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/106.jpg" alt="">
+                <p>Result Day</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/108.jpg" alt="">
+                <p>Result Day</p>
+            </div>
+       <!-- ROW 7 -->
+            <div class="card">
+                <img src="./School Pic/203.jpg" alt="">
+                <p>School Pic</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/202.jpg" alt="">
+                <p>School Pic</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/198.jpg" alt="">
+                <p>School Pic</p>
+            </div>
+   <!-- ROW 8 -->
+            <div class="card">
+                <img src="./School Pic/39.jpg" alt="">
+                <p>Science Exibition</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/41.jpg" alt="">
+                <p>Sport Gala</p>
+            </div>
+
+            <div class="card">
+                <img src="./School Pic/242.jpg" alt="">
+                <p>Milad Day</p>
+            </div>
+        </div>
+
+    </div>
+
+</br></br></br>
+<br/><br/><br/><br/><br/><br/>
+
+<br/><br/><br/><br/><br/><br/>
+
+  <!-- FOOTER -->
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h3 style="color:#fff;margin-bottom:8px">Rising Scholars School</h3>
+        <p style="color:rgba(255,255,255,0.85)">Empowering students — Building futures</p>
+      </div>
+      <div style="color:rgba(255,255,255,0.9)">
+<p>
+  <a href="https://wa.me/923459876895" target="_blank" style="text-decoration:none; color:inherit;">
+    Phone 📱: +92 0345-9876895
+  </a>
+</p>
+<br>
+        <p>Email 📧: rsss.taxila@gmail.com'</p> </br>
+        <p>Address 🏡: Near Flour Mill,Taxila,Pakistan</p> </br>
+      </div>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,0.8);margin-top:18px">© 2025 Rising Scholars — All Rights
+      Reserved</p>
+  </footer>
+
+<!-- CHAT -->
+  <div class="toggle-btn" id="toggleBtn">💬</div>
+
+  <div class="chatbox" id="chatbox">
+    <div class="chat-header">School Admission Bot</div>
+
+    <div class="chat-area" id="chatArea"></div>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type here...">
+      <button onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+
+
+  <script>
+// navbar
+  const menuBtn = document.getElementById("menuBtn");
+  const navLinks = document.getElementById("navLinks");
+
+  menuBtn.onclick = () => {
+    navLinks.classList.toggle("show");
+  };
+
+    // admin button
+    let loginBtn = document.getElementById("loginBtn");
+    let popup = document.getElementById("popup");
+    let errorMsg = document.getElementById("errorMsg");
+
+    // YOUR ADMIN LOGIN DETAILS
+    const ADMIN_EMAIL = "rsss.taxila@gmail.com";
+    const ADMIN_PASSWORD = "Rsss123";
+
+    loginBtn.onclick = () => {
+      if (loginBtn.innerText === "Logout") {
+        loginBtn.innerText = "Login";
+        alert("You are logged out successfully!");
+      } else {
+        popup.style.display = "flex";
+      }
+    };
+
+    function checkLogin() {
+      let email = document.getElementById("email").value.trim();
+      let password = document.getElementById("password").value.trim();
+
+      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+
+        popup.style.display = "none";
+        loginBtn.innerText = "Logout";
+        errorMsg.innerText = "";
+
+        alert("Login successful! Welcome Admin.");
+
+      } else {
+        errorMsg.innerText = "You are not admin!";
+      }
+    }
+
+    // Close popup by clicking outside
+    popup.onclick = (e) => {
+      if (e.target === popup) popup.style.display = "none";
+    };
+
+    // chaat
+    const toggleBtn = document.getElementById("toggleBtn");
+    const chatbox = document.getElementById("chatbox");
+    const chatArea = document.getElementById("chatArea");
+    const userInput = document.getElementById("userInput");
+
+    toggleBtn.onclick = () => {
+      chatbox.classList.toggle("show");
+      toggleBtn.innerHTML = chatbox.classList.contains("show") ? "✖" : "💬";
+    };
+
+    function sendMsg() {
+      let text = userInput.value.trim();
+      if (!text) return;
+
+      // USER MESSAGE
+      addMsg(text, "user");
+
+      userInput.value = "";
+
+      // BOT TYPING ANIMATION
+      let typing = document.createElement("div");
+      typing.className = "typing bot-msg";
+      typing.innerHTML = `<span></span><span></span><span></span>`;
+      chatArea.appendChild(typing);
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      setTimeout(() => {
+        typing.remove();
+        botReply(text);
+      }, 1200);
+    }
+
+    function addMsg(text, type) {
+      let div = document.createElement("div");
+      div.className = "msg " + (type === "user" ? "user-msg" : "bot-msg");
+      div.innerText = text;
+      chatArea.appendChild(div);
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function botReply(input) {
+      input = input.toLowerCase();
+
+      let reply = "";
+
+      if (input.includes("fee")) reply = "So our Admission fee is Rs. 3000 only.";
+      else if (input.includes("location")) reply = "We are located at Timber Market Road, Taxila.";
+      else if (input.includes("supervisor")) reply = "Supervisor: Sir Safdar Hussain Anjum.";
+      else if (input.includes("admission")) reply = "Admissions are open now!";
+      else if (input.includes("school")) reply = "Our  school is very good in education and in everything!";
+      else if (input.includes("hi")) reply = "Hello! Tell me how can i help you";
+      else if (input.includes("bye")) reply = "Thank you for contacting us! If you need any information we are always avalabile for you";
+      else reply = "Thank you! Our team will contact you soon.";
+
+      addMsg(reply, "bot");
+    }
+    //  anonymus
+
+    const links = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('main section, .hero');
+
+    //  code of upcoming events
+
+
+
+    // ------------------ LOCAL STORAGE SYSTEM ------------------
+    let events = JSON.parse(localStorage.getItem("events")) || [];
+
+    // ------------------ DISPLAY EVENTS ------------------
+    function showEvents() {
+      let userList = document.getElementById("eventList");
+      let adminList = document.getElementById("adminEventList");
+
+      userList.innerHTML = "";
+      adminList.innerHTML = "";
+
+      events.forEach((ev, i) => {
+        // USER DISPLAY
+        userList.innerHTML += `<div class='event-item'>${ev}</div>`;
+
+        // ADMIN DISPLAY
+        adminList.innerHTML += `
+            <div class='event-item'>
+                ${ev}
+                <button style="background:red; width:auto;" class="btn-login" onclick="delEvent(${i})">Delete</button>
+            </div>
+        `;
+      });
+    }
+    showEvents();
+
+    // ------------------ ADD EVENT ------------------
+    function addEvent() {
+      let val = document.getElementById("newEvent").value;
+      if (val.trim() === "") return alert("Write an event first!");
+
+      events.push(val);
+      localStorage.setItem("events", JSON.stringify(events));
+      document.getElementById("newEvent").value = "";
+      showEvents();
+    }
+
+    // ------------------ DELETE EVENT ------------------
+    function delEvent(index) {
+      events.splice(index, 1);
+      localStorage.setItem("events", JSON.stringify(events));
+      showEvents();
+    }
+
+    // ------------------ LOGIN SYSTEM ------------------
+    function login() {
+      let email = document.getElementById("email").value;
+      let pass = document.getElementById("password").value;
+
+      if (email === "rsss.taxila@gmail.com" && pass === "Rsss123") {
+        localStorage.setItem("admin", "true");
+        document.getElementById("popup").style.display = "none"; // hide popup
+        showAdminPanel();
+      } else {
+        document.getElementById("errorMsg").innerText = "❌ You are not admin!";
+      }
+    }
+
+    // ------------------ LOGOUT ------------------
+    function logout() {
+      localStorage.removeItem("admin");
+      location.reload();
+    }
+    // ------------------ SHOW PANEL ------------------
+    function showAdminPanel() {
+      let isAdmin = localStorage.getItem("admin");
+
+      if (isAdmin) {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+      }
+    }
+    showAdminPanel();
+    // ------------------ SHOW LOGIN POPUP ------------------
+    document.getElementById("loginBtn").addEventListener("click", function () {
+      document.getElementById("popup").style.display = "flex";
+    });
+    // loader
+window.addEventListener("load", function() {
+  const loader = document.getElementById("fancy-loader");
+  loader.style.opacity = "0";
+  loader.style.transition = "opacity 0.5s ease";
+  setTimeout(() => { loader.style.display = "none"; }, 1000);
+});
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>
